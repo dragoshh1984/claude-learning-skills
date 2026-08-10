@@ -23,8 +23,8 @@ with the first lesson.
 1. **Obtain the paper + code.** A campaign dir `src/learning/<campaign>/` is the
    home for one studied paper. Download the PDF to `<campaign>/paper.pdf` for
    local reading — paper PDFs are never committed (keep the arxiv link in
-   `distillation.md` instead; see the host-project gitignore block in the
-   README). If an official implementation exists, shallow-clone it to
+   `distillation.md` instead; see the host-project gitignore block in
+   AGENTS.md). If an official implementation exists, shallow-clone it to
    `<campaign>/official/` (gitignored — re-pullable; record the clone command in
    `distillation.md`). Note the arxiv id, version, and date.
 2. **Read the FULL paper** — every page, including appendices; that is where the

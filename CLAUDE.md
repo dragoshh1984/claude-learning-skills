@@ -18,9 +18,11 @@ in — this repo is only edited when maintaining the skills themselves.
 - **Cross-skill references are by sibling folder** (e.g. paper-distill →
   `distill-core/SKILL.md`); both the repo layout and the symlink farm keep
   siblings adjacent, so the reference resolves either way.
-- **When adding/renaming a skill**: update the README's table, workflow line,
-  and the install symlink loop, and symlink it into `~/.claude/skills/`.
+- **When adding/renaming a skill**: update the install symlink loop in BOTH
+  README and AGENTS.md, the per-skill reference and pipeline diagram in
+  AGENTS.md, and symlink it into `~/.claude/skills/`. The README stays
+  minimal (quick start, attribution, install, pointer to AGENTS.md);
+  everything detailed belongs in AGENTS.md, which is written for agents.
 - **Structural lessons** about how a skill should work go into its SKILL.md;
   study-specific lessons go into the local `references/lessons.md`. If a rule
   mentions a paper or campaign by name, it is probably the latter.
-- **Never commit — the user decides.**
