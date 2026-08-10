@@ -56,7 +56,9 @@ from earlier `concept-code` runs. Before starting a tutored build of one:
 
 1. Read the concept's `notes.md`, the campaign's `code_map.md`, and the
    explainer page if it exists. Establish what the user already knows — check
-   `references/learner-profile.md` and ask if unclear.
+   `references/learner-profile.md` and ask if unclear. (The profile is personal
+   and gitignored; if it doesn't exist yet, create it from
+   `references/learner-profile.template.md`.)
 2. **Agree the target** with AskUserQuestion, one at a time: which concept,
    train or analytical flavor, and how much scaffolding they want
    (skeleton with signatures / signatures only / blank file and a spec).

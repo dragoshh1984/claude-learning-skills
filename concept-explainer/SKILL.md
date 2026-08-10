@@ -11,6 +11,9 @@ the concept's `notes.md` (from `paper-distill`), its code file (from
 `concept-code`) when it exists, and the paper's official implementation cloned
 at `src/learning/<campaign>/official/`.
 
+**Before starting, read `references/lessons.md` (this skill's folder)** — the
+accumulated page-building rules apply before any HTML is written.
+
 ## Non-negotiables (learned from user corrections)
 
 - **Ship finished pages, never roadmaps.** No "Planned for the full page",
@@ -59,7 +62,7 @@ at `src/learning/<campaign>/official/`.
 - **Section anatomy** (not every section needs all parts, but this is the order):
   1. Motivation — why this idea exists, what breaks without it.
   2. The math — KaTeX-rendered equations. Cite the source paper with section +
-     equation numbers AND the canonical sources (see `paper-distill`
+     equation numbers AND the canonical sources (see `distill-core`
      `references/sources.md`). Key equations get a visual box.
   3. Expanded derivation — the steps the paper skips, worked explicitly. This is
      the core value of the page; do not compress it away.

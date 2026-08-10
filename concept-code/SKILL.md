@@ -9,6 +9,10 @@ Produce `src/learning/<campaign>/concepts/<slug>/<slug>.py`: one file, minimal
 but production-quality, that demonstrates the concept **for real** — it trains,
 it produces figures, and the explainer quotes it verbatim. Write it to be read.
 
+**Before starting, read `references/lessons.md` (this skill's folder)** — the
+accumulated hard-won rules from previous mini-projects apply before any new
+code is written.
+
 > If the user wants to write the code themselves — "teach me", "I'll implement
 > it", "guide me through it" — use **`concept-code-tutor`** instead. That skill
 > forbids Claude from writing the implementation; this one requires it.
