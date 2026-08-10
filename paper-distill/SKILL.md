@@ -14,7 +14,9 @@ outputs. Downstream skills: `concept-explainer` (HTML page) and `concept-code`
 
 **Before starting, read `references/lessons.md` (this skill's folder)** — the
 accumulated distillation lessons apply before any reading plan is made. New
-reusable lessons from a distillation pass land there too.
+reusable lessons from a distillation pass land there too. The file is local and
+gitignored (personal study data); if it doesn't exist yet, skip and create it
+with the first lesson.
 
 ## Workflow
 

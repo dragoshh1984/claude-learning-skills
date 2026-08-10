@@ -12,7 +12,9 @@ the concept's `notes.md` (from `paper-distill`), its code file (from
 at `src/learning/<campaign>/official/`.
 
 **Before starting, read `references/lessons.md` (this skill's folder)** — the
-accumulated page-building rules apply before any HTML is written.
+accumulated page-building rules apply before any HTML is written. The file is
+local and gitignored (personal study data); if it doesn't exist yet, skip and
+create it with the first lesson.
 
 ## Non-negotiables (learned from user corrections)
 

@@ -42,6 +42,8 @@ The caller (paper-distill or concept-distill) arrives with:
    a distillation pass is not "done for the user" until those follow.
 4. **Update the canonical-source list** in `references/sources.md` (this skill's
    folder): for each topic, the papers/textbooks/guides an explainer must cite.
+   The file is local and gitignored (personal study data); create it on first
+   use.
 5. **Update repo `CLAUDE.md`** (concept table) and `docs/JOURNAL.md` (one entry:
    what was distilled, what was selected, why).
 

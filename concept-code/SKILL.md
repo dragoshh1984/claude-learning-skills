@@ -11,7 +11,8 @@ it produces figures, and the explainer quotes it verbatim. Write it to be read.
 
 **Before starting, read `references/lessons.md` (this skill's folder)** — the
 accumulated hard-won rules from previous mini-projects apply before any new
-code is written.
+code is written. The file is local and gitignored (personal study data); if it
+doesn't exist yet, skip and create it with the first lesson.
 
 > If the user wants to write the code themselves — "teach me", "I'll implement
 > it", "guide me through it" — use **`concept-code-tutor`** instead. That skill

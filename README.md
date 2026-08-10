@@ -74,9 +74,10 @@ The skills write learning artifacts to `src/learning/<campaign>/concepts/<slug>/
 relative to whatever project they run in. `concept-explainer` vendors its own
 KaTeX/highlight.js assets, so pages are fully offline.
 
-**Self-updating references.** The skills read their `references/lessons.md`
-before starting and append new hard-won lessons to it as they work — your clone
-accumulates your own lessons on top of the committed ones (commit/push them to
-share). `concept-code-tutor` additionally keeps a personal
-`references/learner-profile.md` — gitignored; bootstrapped from the committed
-`learner-profile.template.md` on first use.
+**Self-updating references (local, gitignored).** As the skills work they
+accumulate personal study data next to themselves — `references/lessons.md`
+(hard-won rules, read before each run and appended to after), distill-core's
+`references/sources.md` (canonical-source bibliography per topic), and
+concept-code-tutor's `references/learner-profile.md` (how you learn;
+bootstrapped from the committed `learner-profile.template.md`). All of these
+are gitignored: the repo ships concept-free, and each clone grows its own.

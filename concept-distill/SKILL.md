@@ -31,8 +31,9 @@ and `concept-explainer`.
    duplicating — check before creating anything.
 2. **Gather the canonical sources.** This replaces the paper read, and it is not
    optional — the math must come from real sources, never from memory:
-   - Check `distill-core/references/sources.md` first — the topic may already
-     have a curated source list.
+   - Check `distill-core/references/sources.md` first (if it exists — the file
+     is local and gitignored) — the topic may already have a curated source
+     list.
    - Otherwise search for the defining paper(s), textbook chapters, and
      authoritative writeups; FETCH and READ the sections that define the math.
      Record exact section/equation numbers as you go — the explainer must cite
