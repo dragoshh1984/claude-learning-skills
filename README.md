@@ -3,6 +3,21 @@
 Claude Code skills for concept learning — turning papers and DL concepts into
 mini-projects, explainer pages, and an iterative study loop.
 
+## Quick start
+
+The entry point is `paper-distill`:
+
+```
+/paper-distill https://arxiv.org/abs/2406.XXXXX
+```
+
+or just say it naturally: *"I want to study this paper: \<link\>, distill it"*.
+It downloads the PDF, reads it fully, clones the official code, maps concepts to
+exact `file:line`, then grills you one question at a time about which concepts
+you want, priority, and whether each should be a **train** mini-project
+(MNIST-scale run) or **analytical** (math/plots, no training). Only then does it
+write `distillation.md` + one `notes.md` per selected concept.
+
 ## Skills
 
 | Skill | Role |
