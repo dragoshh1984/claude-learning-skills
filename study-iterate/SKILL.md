@@ -40,10 +40,10 @@ while the pages stay frozen.
 - Each page's SOURCE is the committed `fragment.html` next to it
   (`concepts/<slug>/fragment.html`, campaign hub `<campaign>/fragment.html`).
   **Never edit `index.html` directly** — edit the fragment, then rebuild:
-  `uv run python .claude/skills/concept-explainer/assets/build_page.py
+  `uv run python ~/.claude/skills/concept-explainer/assets/build_page.py
   --content <dir>/fragment.html --title "<title>" --out <dir>/index.html
   [--images-root <dir>]`
-- Validate after every rebuild: `node .claude/skills/concept-explainer/assets/validate_page.js <page>`
+- Validate after every rebuild: `node ~/.claude/skills/concept-explainer/assets/validate_page.js <page>`
   (KaTeX dist copy required next to it — see lessons.md).
 - If the `.py` changed: rerun its `figures`, re-check every excerpt + line
   reference on the page against the new file before rebuilding.

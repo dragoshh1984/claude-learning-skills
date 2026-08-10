@@ -21,10 +21,11 @@ with the first lesson.
 ## Workflow
 
 1. **Obtain the paper + code.** A campaign dir `src/learning/<campaign>/` is the
-   home for one studied paper. Download the PDF to `<campaign>/paper.pdf` — the
-   original paper IS committed as the campaign's doc. If an official
-   implementation exists, shallow-clone it to `<campaign>/official/` (gitignored
-   — `src/learning/**/official/` — re-pullable; record the clone command in
+   home for one studied paper. Download the PDF to `<campaign>/paper.pdf` for
+   local reading — paper PDFs are never committed (keep the arxiv link in
+   `distillation.md` instead; see the host-project gitignore block in the
+   README). If an official implementation exists, shallow-clone it to
+   `<campaign>/official/` (gitignored — re-pullable; record the clone command in
    `distillation.md`). Note the arxiv id, version, and date.
 2. **Read the FULL paper** — every page, including appendices; that is where the
    derivations live. If a concept's math is defined in a *referenced* paper

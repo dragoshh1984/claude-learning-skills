@@ -74,6 +74,26 @@ The skills write learning artifacts to `src/learning/<campaign>/concepts/<slug>/
 relative to whatever project they run in. `concept-explainer` vendors its own
 KaTeX/highlight.js assets, so pages are fully offline.
 
+## What the skills expect from a host project
+
+- A `src/learning/` directory (the skills create campaign/concept folders
+  inside it).
+- These gitignore entries — heavy or re-pullable artifacts never get committed
+  (curated small PNGs in `concepts/*/assets/` are the committed exception):
+
+  ```gitignore
+  src/learning/**/outputs/     # raw run outputs/checkpoints
+  src/learning/**/official/    # clones of papers' official code (re-pullable)
+  src/learning/**/data/        # dataset downloads (e.g. shared MNIST)
+  src/learning/**/.reference/  # tutored builds: reference impls parked out of sight
+  src/learning/**/paper.pdf    # papers are linked, never committed
+  ```
+
+- Bookkeeping targets, updated when present: `docs/JOURNAL.md` (one entry per
+  session) and a concept table in the project's `CLAUDE.md`.
+- Tooling: Python via `uv` (mini-projects, page builds), `node` (page
+  validation), headless Chrome (visual verification).
+
 **Self-updating references (local, gitignored).** As the skills work they
 accumulate personal study data next to themselves — `references/lessons.md`
 (hard-won rules, read before each run and appended to after), distill-core's

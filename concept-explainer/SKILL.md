@@ -121,7 +121,7 @@ Every concept page carries at least a **high-level overview diagram** and an
   A one-line docstring change shifts every reference below it, and a wrong
   line number is a lie the reader cannot detect. Do not do this by eye:
   ```
-  uv run python .claude/skills/concept-explainer/assets/check_excerpts.py --all
+  uv run python ~/.claude/skills/concept-explainer/assets/check_excerpts.py --all
   ```
   It verifies that each excerpt's first line sits exactly at the stated start
   line and that every quoted line really appears in the stated range (ignoring
@@ -154,7 +154,7 @@ The layout, palette and all page CSS live in that script's `LAYOUT` string:
 **edit the script, never `template.html`**, then:
 
 ```
-uv run python .claude/skills/concept-explainer/assets/build_template.py   # -> template.html
+uv run python ~/.claude/skills/concept-explainer/assets/build_template.py   # -> template.html
 # then rebuild EVERY page — each embeds a copy of the template
 ```
 
