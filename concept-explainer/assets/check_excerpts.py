@@ -24,18 +24,35 @@ import re
 import sys
 from pathlib import Path
 
-REPO = Path(__file__).resolve().parents[4]
+REPO = Path(__file__).resolve().parents[4]   # holds only while the skill lives in the repo
 PAIR = re.compile(
     r'<div class="code-path">(?P<ref>[^<]+)</div>\s*'
     r'<pre><code[^>]*>(?P<code>.*?)</code></pre>',
     re.S,
 )
-REF = re.compile(r'(?P<path>[\w./-]+\.py):(?P<start>\d+)(?:-(?P<end>\d+))?')
+REF = re.compile(
+    r'(?P<path>[\w./-]+\.(?:py|cu|cuh|cpp|h|hpp)):(?P<start>\d+)(?:-(?P<end>\d+))?')
+
+
+def repo_root(fragment: Path) -> Path | None:
+    """Nearest ancestor of the fragment that looks like a project root.
+
+    REPO above assumes this skill sits inside the repo it checks; once the skill
+    is promoted to ~/.claude it points at the home directory instead, and every
+    repo-relative ref reads as a missing file. Find the root from the page.
+    """
+    for parent in fragment.resolve().parents:
+        if (parent / ".git").exists() or (parent / "pyproject.toml").exists():
+            return parent
+    return None
 
 
 def resolve(path: str, fragment: Path) -> Path | None:
     """Page refs are either repo-relative or campaign-relative (official/...)."""
-    for base in (REPO, fragment.parents[2], fragment.parents[3]):
+    bases = [REPO, repo_root(fragment), fragment.parents[2], fragment.parents[3]]
+    for base in bases:
+        if base is None:
+            continue
         p = base / path
         if p.exists():
             return p
@@ -98,7 +115,17 @@ def main() -> None:
 
     frags = args.fragments
     if args.all:
-        frags = sorted((REPO / "src/learning").glob("*/concepts/*/fragment.html"))
+        # REPO is only right while this skill lives in the repo; fall back to cwd
+        roots = [REPO, repo_root(Path.cwd() / "_"), Path.cwd()]
+        frags = []
+        for root in roots:
+            if root is None:
+                continue
+            frags = sorted((root / "src/learning").glob("*/concepts/*/fragment.html"))
+            if frags:
+                break
+        if not frags:
+            sys.exit("--all found no fragments; run from the repo or pass paths")
     problems: list[str] = []
     for f in frags:
         found = check_fragment(f)

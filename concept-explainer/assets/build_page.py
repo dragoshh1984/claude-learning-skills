@@ -14,6 +14,8 @@ from __future__ import annotations
 import argparse
 import base64
 import re
+import subprocess
+import sys
 from pathlib import Path
 
 TEMPLATE = Path(__file__).parent / "template.html"
@@ -49,6 +51,17 @@ def main() -> None:
     html = html.replace("{{CONTENT}}", content)
     a.out.write_text(html)
     print(f"wrote {a.out} ({a.out.stat().st_size / 1e6:.2f} MB)")
+    refresh_site(a.out)
+
+
+def refresh_site(out: Path) -> None:
+    """If the page lives under a tree with a build_site.py (src/learning), regenerate the
+    site's front page + nav and re-inject the nav into every page, this one included."""
+    for parent in out.resolve().parents:
+        script = parent / "build_site.py"
+        if script.is_file():
+            subprocess.run([sys.executable, str(script)], check=True)
+            return
 
 
 if __name__ == "__main__":

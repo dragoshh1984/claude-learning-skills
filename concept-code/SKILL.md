@@ -105,14 +105,23 @@ Copy instead when the file must read standalone as a lesson.
 
 ## Workflow
 
+0. **Run only when the user opted in.** The mini-project is optional (see
+   "The mini-project gate" in `distill-core`). If `notes.md` says
+   `Mini-project: none`, do not build one unless the user now asks; if it says
+   `ask` or nothing, ask the gate question first. If `details: claude`, make
+   steps 2-3's decisions yourself, state them in chat in a few lines, and build
+   without further questions.
 1. Read `notes.md` (mini-project sketch), the campaign's `code_map.md`, and the
    explainer page if it exists.
 2. **Survey tooling** — check whether a better library exists and PROPOSE
    additions before adding. Keep deps minimal, justify each.
-3. **Bring design decisions to the user** (AskUserQuestion, ONE question at a
-   time, arrow-selectable, with a recommendation): flavor, dataset/architecture
-   scale, which arms to run, what the figures should show. Never park these
-   questions in a file — ask, then build the chosen answer.
+3. **Bring design decisions to the user — briefly** (AskUserQuestion, ONE
+   question at a time, arrow-selectable, with a recommendation). The first
+   question is always "You decide the details (recommended) / Ask me the key
+   choices / I'll write it myself (→ concept-code-tutor)", unless `notes.md`
+   already records it. Only on "ask me", cover at most two more: the question
+   the experiment answers / its arms, and scale or runtime budget. Never park
+   these questions in a file — ask, then build the chosen answer.
 4. Write the file. Smoke-test. Launch arms. Export figures.
 5. **Design for a surprise.** The best pages came from measured results that
    contradict intuition (L2 winning MSE while producing unusable blur; VQ

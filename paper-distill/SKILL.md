@@ -25,7 +25,7 @@ with the first lesson.
    local reading — paper PDFs are never committed (keep the arxiv link in
    `distillation.md` instead; see the host-project gitignore block in
    AGENTS.md). If an official implementation exists, shallow-clone it to
-   `<campaign>/official/` (gitignored — re-pullable; record the clone command in
+   `third_party/<repo>/` at the repo root (gitignored — re-pullable; never a dir named `official/` inside the learning tree; record the clone command in
    `distillation.md`). Note the arxiv id, version, and date.
 2. **Read the FULL paper** — every page, including appendices; that is where the
    derivations live. If a concept's math is defined in a *referenced* paper

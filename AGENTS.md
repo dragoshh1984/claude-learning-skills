@@ -14,8 +14,9 @@ artifacts inside the user's host project, under
 
 - `notes.md` — Claude-facing distilled notes per concept (scaffolding, not a
   user deliverable)
-- `<slug>.py` — a runnable single-file PyTorch mini-project (a controlled
-  experiment, not a demo)
+- `<slug>.py` — OPTIONAL: a runnable single-file PyTorch mini-project (a
+  controlled experiment, not a demo), built only when the user says yes at the
+  mini-project gate
 - `index.html` — a self-contained long-form explainer page (real KaTeX math,
   interactive canvas visualizations, verbatim code excerpts, real training
   outputs)
@@ -64,11 +65,13 @@ the math for each.
 Both entry points delegate here. Drafts the concept map (general reusable
 concepts vs campaign-specific mechanisms), interviews the user before writing
 anything (AskUserQuestion, ONE question at a time: which concepts, priority,
-train vs analytical flavor), writes `notes.md` per selected concept, and does
+the mini-project gate: none / analytical / train, with a short follow-up only
+on a yes), writes `notes.md` per selected concept, and does
 the bookkeeping (sources list, host CLAUDE.md concept table, journal).
 
-### concept-code — Claude builds the mini-project
-Input: a concept's `notes.md`. Output: one file,
+### concept-code — Claude builds the mini-project (optional)
+Runs only when the user opted in at the gate; its first question is "you decide
+the details / ask me / I'll write it". Input: a concept's `notes.md`. Output: one file,
 `concepts/<slug>/<slug>.py`, production-quality, seeded and reproducible.
 Built as a controlled experiment: two or more arms sharing
 data/backbone/seed/budget, one flag apart. Two flavors: **train** (small real

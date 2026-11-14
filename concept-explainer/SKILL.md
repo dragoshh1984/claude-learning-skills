@@ -8,8 +8,8 @@ description: Author or iterate on a self-contained HTML explainer page for a DL 
 Produce `src/learning/<campaign>/concepts/<slug>/index.html`: a long-form,
 self-contained explainer calibrated to a strong-ML-background reader. Input is
 the concept's `notes.md` (from `paper-distill`), its code file (from
-`concept-code`) when it exists, and the paper's official implementation cloned
-at `src/learning/<campaign>/official/`.
+`concept-code`) when the user opted into a mini-project, and the paper's official implementation cloned
+at `third_party/<repo>/` (repo root, gitignored).
 
 **Before starting, read `references/lessons.md` (this skill's folder)** — the
 accumulated page-building rules apply before any HTML is written. The file is
@@ -18,6 +18,44 @@ create it with the first lesson.
 
 ## Non-negotiables (learned from user corrections)
 
+- **THE MINI-PROJECT IS OPTIONAL** (2026-11-14). Check `notes.md`'s
+  `Mini-project:` line; if it is missing or `ask`, ask the gate question from
+  `distill-core` ("The mini-project gate") as the FIRST grill question. With
+  `none` the page is Part 1 only: no "mini-project" sections, no forward
+  references to measurements ("measured in §N"), no `assets/` from our code; it
+  ends with extension exercises (optional) and References. Diagrams and
+  interactives are still required; they are explanation, not experiment.
+- **WHEN THERE IS ONE, THE MINI-PROJECT LIVES AT THE END OF THE PAGE, WHOLE
+  AND UNINTERLEAVED.**
+  (2026-08-16, hard rule, applies to every page from now on and retroactively.)
+  A page has exactly two parts, in this order:
+  1. **Concept explanation / overview** — motivation, math, derivations,
+     notation, diagrams, interactives, and the PAPER's own implementation from
+     `third_party/` with `file:line`. Nothing produced by our mini-project appears
+     here.
+  2. **The mini-project** — ONE contiguous block of sections at the end:
+     setup and arms, excerpts of our `<slug>.py`, the figures it produced, the
+     result tables, the negative results, "running it", extension exercises.
+
+  What counts as mini-project material and must move: every excerpt of our own
+  `.py`, every PNG in the concept's `assets/`, every number our runs produced,
+  every "measured / we found / our arms" table, every run command. What stays
+  up front: math, diagrams, canvas interactives (they are explanation, not
+  experiment) and `third_party/` excerpts (they are the paper, not our work).
+  When a concept section wants to cite a result, it forward-references the
+  section ("measured in §N") instead of showing it.
+
+  **Section-naming convention** (so the split is visible in the TOC, which is
+  built one entry per `<section id>` + its `<h2>`): concept sections are
+  `N · Title`; the first experiment section is
+  `N · The mini-project — <the question it answers>` and opens with a
+  `<p class="cite">` line saying the concept explanation ends there and
+  everything below is ours; every following experiment section is
+  `N · Mini-project · <title>`, ending with `N · Mini-project · running it`,
+  then `References`. The user's words:
+  *"the experiment is done fully AT THE END of the page — the
+  mini-experiment-project — and it should not be interleaved with the concept
+  explanation/overview."*
 - **Ship finished pages, never roadmaps.** No "Planned for the full page",
   no "skeleton draft", no status banners. If a concept is worth a page, build
   the page: derivations, interactives, trained code, real figures. A page that
@@ -61,7 +99,11 @@ create it with the first lesson.
 - **Long-form scrolling with a sticky TOC.** One section = one idea, slide-ish
   pacing. Keyboard j/k or prev/next jumps between sections.
 - **Notation table near the top** — every symbol used later, defined once.
-- **Section anatomy** (not every section needs all parts, but this is the order):
+- **Page anatomy — two parts, never interleaved** (see the non-negotiable
+  above; Part 2 exists only when the user opted into a mini-project).
+
+  **Part 1 — concept explanation.** Per section (not every section needs all
+  parts, but this is the order):
   1. Motivation — why this idea exists, what breaks without it.
   2. The math — KaTeX-rendered equations. Cite the source paper with section +
      equation numbers AND the canonical sources (see `distill-core`
@@ -70,12 +112,20 @@ create it with the first lesson.
      the core value of the page; do not compress it away.
   4. Intuition — mental model, limiting cases, what the equation "does".
   5. Interactive visualization — see below.
-  6. Code — inline excerpt of OUR mini-project code (see linking rules), AND
-     the corresponding excerpt of the paper's ACTUAL implementation from
-     `official/` with its file:line — side by side or stacked, so the reader
-     sees both the pedagogical minimum and the production reality.
-  7. Real outputs — figures the code actually produced, from `assets/`
+  6. The paper's ACTUAL implementation from `third_party/` with its `file:line`,
+     wherever it makes the mechanism concrete or contradicts the text.
+  7. A forward reference to where the claim gets measured ("measured in §N"),
+     only when the page has a mini-project.
+
+  **Part 2 — the mini-project** (only if opted in), one contiguous block of sections at the end:
+  1. What is being run and why — the question the experiment answers.
+  2. The arms — one flag apart, with every shared control named.
+  3. Excerpts of OUR `<slug>.py` (see linking rules), section by section.
+  4. Real outputs — figures the code actually produced, from `assets/`
      (trial basis: keep curated small PNGs, raw outputs stay gitignored).
+  5. Results tables, including negative and counterintuitive ones in full.
+  6. Running it — exact commands, seeds, runtime, hardware.
+  7. Extension exercises.
 
 ## Diagrams (required, not optional)
 
@@ -91,7 +141,7 @@ Every concept page carries at least a **high-level overview diagram** and an
   ordinary flow; an autoencoder has no encoder→decoder bridge, and that absence
   is the lesson).
 - Verify structure against the real code before drawing — read the block's
-  `forward` in `official/` rather than assuming the usual pattern.
+  `forward` in `third_party/` rather than assuming the usual pattern.
 - Hand-authored inline `<svg>` with `viewBox`, `role="img"`, `aria-label`,
   wrapped in `<figure class="diagram">` with a `<figcaption>` stating the claim.
   Classes: `.dg-node`/`.dg-node-2` boxes, `.dg-flow` arrows, `.dg-skip` skips,
@@ -134,9 +184,12 @@ Every concept page carries at least a **high-level overview diagram** and an
 
 1. Read `notes.md`, the code file (if any), and the canonical sources list.
 2. **Grill the user** (AskUserQuestion, ONE question at a time, arrow-selectable,
-   with a recommended answer): section list for this page, which derivations to
-   expand vs summarize, which interactives to build, depth calibration for THIS
-   topic (what they already know).
+   with a recommended answer). First, if `notes.md` does not record it, the
+   **mini-project gate** (explainer only / + analytical / + training; and, only
+   on a yes, the short follow-up whose first option is "you decide the
+   details") — see `distill-core`. Then: section list for this page, which
+   derivations to expand vs summarize, which interactives to build, depth
+   calibration for THIS topic (what they already know).
 3. Build the page from the template. Verify: opens locally, math renders,
    interactives run, excerpts match the real file.
 4. Iterate: the user reviews in a browser and gives feedback in rounds — expect

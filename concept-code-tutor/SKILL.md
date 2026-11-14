@@ -59,8 +59,9 @@ from earlier `concept-code` runs. Before starting a tutored build of one:
    `references/learner-profile.md` and ask if unclear. (The profile is personal
    and gitignored; if it doesn't exist yet, create it from
    `references/learner-profile.template.md`.)
-2. **Agree the target** with AskUserQuestion, one at a time: which concept,
-   train or analytical flavor, and how much scaffolding they want
+2. **Agree the target** with AskUserQuestion, one at a time: which concept
+   (the user opting into this skill is a "yes" at the mini-project gate, so do
+   not re-ask whether to have one), train or analytical flavor, and how much scaffolding they want
    (skeleton with signatures / signatures only / blank file and a spec).
 3. **Write `TUTOR.md`** in the concept folder — the resumable state (template
    below). This file is what lets a *fresh session with no memory* pick the run

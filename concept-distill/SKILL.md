@@ -16,7 +16,7 @@ and `concept-explainer`.
 
 ## How a topic campaign differs from a paper campaign
 
-- No `paper.pdf`, no `official/` clone, no `distillation.md`, no `code_map.md`.
+- No `paper.pdf`, no `third_party/` clone, no `distillation.md`, no `code_map.md`.
 - The campaign groups RELATED topics, not one publication — prefer extending an
   existing topic campaign (e.g. `src/learning/fundamentals/`) over creating a
   new campaign per concept. Create a new one only for a genuinely new area.
@@ -66,7 +66,9 @@ and `concept-explainer`.
   campaign or paper prompted the study (the normalization page was corrected
   mid-flight for being diffusion-focused; the topic is the subject, not the
   context it came up in).
-- Prefer **analytical** flavor when everything the page would claim can be
+- The mini-project is optional (gate in `distill-core`). Recommend **explainer
+  only** when the page's math and interactives already show everything worth
+  showing. Among mini-projects, prefer **analytical** flavor when everything the page would claim can be
   derived or measured from the definitions without training; do not force a toy
   training run whose results would misrepresent where the concept actually
   matters. Name the real deployment domains where each variant earns its keep

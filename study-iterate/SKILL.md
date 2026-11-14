@@ -13,7 +13,7 @@ while the pages stay frozen.
 ## The contract
 
 1. **Answer in chat FIRST.** The user asked a question; give the direct answer
-   immediately — math, numbers, file:line from `official/`, whatever it takes.
+   immediately — math, numbers, file:line from `third_party/`, whatever it takes.
    Do not make them wait for a page rebuild to learn the answer.
 2. **Then fold it back.** Decide where the answer's durable form belongs and
    update it in the same turn:
@@ -22,7 +22,7 @@ while the pages stay frozen.
 |---|---|
 | conceptual question the page should have answered | patch that page section (the gap IS the finding) |
 | question about the paper's claims/details | answer from `paper.pdf` + cite; add to page if it closes a real gap |
-| question about the real implementation | answer from `code_map.md` / `official/` with file:line; extend `code_map.md` if it required new digging |
+| question about the real implementation | answer from `code_map.md` / `third_party/` with file:line; extend `code_map.md` if it required new digging |
 | "add an example / visualization / interactive" | `concept-explainer` doctrine: extend the fragment, rebuild, validate |
 | "make the code show X" / new variant | `concept-code` doctrine: extend the `.py`, rerun figures, re-sync excerpts |
 | a question that reveals a MISSING concept | propose a new concept folder (one AskUserQuestion, then build it) |
@@ -71,7 +71,17 @@ same turn, phrased as a non-negotiable. Corrections banked this way so far:
 - name every parallel stream explicitly, even when the code is identical;
 - diagrams are required, with every skip connection drawn;
 - pull the paper's official repo and link explanations to the real implementation;
-- survey the best available tool for a job and propose it rather than defaulting.
+- survey the best available tool for a job and propose it rather than defaulting;
+- **the mini-project is optional** — a page may have none (`Mini-project: none`
+  in `notes.md`); never add one while iterating unless the user asks, and then
+  run the gate's short follow-up (`distill-core`). When a page has one,
+  **it lives at the END of the page, whole and uninterleaved** —
+  concept explanation (math, diagrams, interactives, `third_party/` code) first,
+  then ONE contiguous experiment block (our `.py` excerpts, our figures, our
+  result tables, running it, extensions). Iterating on a page must never
+  reintroduce a measurement, one of our figures, or a snippet of our code into
+  the concept half; cite it forward as "measured in §N" instead. Full statement
+  in `concept-explainer` SKILL.md, first non-negotiable.
 
 The test for whether a lesson is banked: a fresh session with no memory of this
 conversation would do the right thing by reading the skill alone.
