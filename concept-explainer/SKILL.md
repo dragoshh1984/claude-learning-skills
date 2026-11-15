@@ -28,6 +28,12 @@ create it with the first lesson.
 - **WHEN THERE IS ONE, THE MINI-PROJECT LIVES AT THE END OF THE PAGE, WHOLE
   AND UNINTERLEAVED.**
   (2026-08-16, hard rule, applies to every page from now on and retroactively.)
+  **Collapsed by default** (user rule, 2026-11-14): the template wraps the
+  mini-project block in a closed `<details class="fold mp-fold">` at load time,
+  starting at the first `<h2>` that contains "mini-project" and ending before the
+  back matter (References / Reading list / Go deeper). Nothing to do per page —
+  but the heading convention below is now load-bearing: a first experiment
+  section whose `<h2>` lacks "mini-project" will not be folded.
   A page has exactly two parts, in this order:
   1. **Concept explanation / overview** — motivation, math, derivations,
      notation, diagrams, interactives, and the PAPER's own implementation from
@@ -99,6 +105,45 @@ create it with the first lesson.
 - **Long-form scrolling with a sticky TOC.** One section = one idea, slide-ish
   pacing. Keyboard j/k or prev/next jumps between sections.
 - **Notation table near the top** — every symbol used later, defined once.
+  Wrapped in a closed `<details class="fold notation-fold">`.
+- **Jargon glossary, by default on every page** (user rule, 2026-11-15) — right
+  after the notation, a closed
+  `<details class="fold notation-fold jargon-fold" id="jargon">` titled
+  "Jargon: what everything is called (click to show)". It answers "what do
+  papers, libraries and people call this?" — the notation table answers "what
+  does this symbol mean here?". Format: one or a few small tables
+  (`<table class="notation jargon">`, grouped under `<h3>` only if there are
+  several groups), columns **term** (common name in bold + a muted
+  `<span class="jg-aka">also: …</span>` line) | **what it means** (one plain
+  line) | **on this page** (the symbol / section where it appears) | **what the
+  code calls it** (attribute or argument names in the actual implementations
+  the page links, e.g. the paper's repo and torch). Each row is
+  `<tr id="jg-<slug>" data-name data-aka data-what>` so links and the template
+  helper can use it.
+  **Do not overdo it:** only terms the page actually uses that either have
+  aliases (several names for one thing) or are field jargon a newcomer would
+  not decode; typically 8–25 rows. No textbook terms with no alias, no
+  restating the notation table, no prose essays in cells.
+  The template provides the CSS, the open-on-link behaviour (any `#jg-…` link or
+  hash opens the fold and flashes the row) and `jargonLine(ids)`, which renders a
+  `called: name (also …) ↗` strip. Use it **only where the page already has an
+  explorer or stepper panel**: map each node/step to its term ids (a small
+  `JG_…` object in the page script) and prepend `jargonLine(...)` to the panel.
+  Never add a panel just to host it.
+- **Explain the deployed system, not a toy** (user rule, 2026-11-15). Every
+  general explanation — prose, equations, shapes, diagrams, interactives in the
+  concept part — uses the real network/method at the sizes and settings of the
+  paper and its code (real dims, token counts, head counts, layer counts, input
+  resolution, loss weights), and the paper's own measurements for what the
+  trained system does. A hand-built toy (tiny dims, invented weights, a handful
+  of tokens) is misleading as the primary explanation. Toys are allowed only in
+  their own section placed **after the entire explanation** (before any
+  mini-project block and the references), titled as toys, each subsection
+  stating which real section it illustrates and exactly what it changes versus
+  the real thing. Concept sections may link to them ("a hand-sized version is in
+  §N"), nothing more. An interactive that runs the real configuration (real
+  shapes, the real initialization, the real cost weights at real size) is not
+  a toy and stays in place.
 - **Page anatomy — two parts, never interleaved** (see the non-negotiable
   above; Part 2 exists only when the user opted into a mini-project).
 

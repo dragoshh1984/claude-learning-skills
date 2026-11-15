@@ -55,6 +55,10 @@ while the pages stay frozen.
 - `notes.md` status line if a concept's state advanced.
 - Repo `CLAUDE.md` concept table on status changes only.
 - `docs/JOURNAL.md` one line per session of iteration (what was asked, what landed).
+- **Every user question → the learner question log** (host `CLAUDE.md` says
+  where; default `docs/learner/questions.md`), under its topic path and
+  sub-topic: date, the question, the difficulty it revealed, where it was
+  answered, status `open`. `test-me` builds tests from this log.
 - A reusable lesson → the relevant skill's `references/lessons.md`.
 
 ## User corrections are permanent
@@ -72,6 +76,14 @@ same turn, phrased as a non-negotiable. Corrections banked this way so far:
 - diagrams are required, with every skip connection drawn;
 - pull the paper's official repo and link explanations to the real implementation;
 - survey the best available tool for a job and propose it rather than defaulting;
+- **general explanations use the deployed system**, at the paper's real sizes
+  and with its real measurements; hand-built toys live only in a separate toy
+  section after the whole explanation, each saying what it changes (full rule
+  in `concept-explainer` SKILL.md). Iterating must not add a toy to a concept
+  section;
+- **every page has a closed jargon glossary** after the notation (aliases +
+  code names for the terms the page uses, kept short; `concept-explainer`
+  SKILL.md). When iterating on a page that lacks one, add it;
 - **the mini-project is optional** — a page may have none (`Mini-project: none`
   in `notes.md`); never add one while iterating unless the user asks, and then
   run the gate's short follow-up (`distill-core`). When a page has one,

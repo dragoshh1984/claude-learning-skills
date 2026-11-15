@@ -121,6 +121,16 @@ details.fold[open] > summary {
   margin-bottom: .8rem; padding-bottom: .5rem; border-bottom: 1px solid var(--border);
 }
 details.fold pre { background: var(--bg); }
+details.mp-fold { border-color: var(--accent); margin: 2.4rem 0 1.4rem; }
+details.mp-fold > summary { font-size: 16px; }
+details.mp-fold > summary .mp-hint { font-weight: 400; color: var(--muted); font-size: 13px; }
+/* ── jargon glossary (closed fold after the notation) + "called:" lines ── */
+.jargon td { vertical-align: top; font-size: .9rem; }
+.jg-aka { color: var(--muted); font-size: .82rem; }
+.jg-called { font: 13px/1.5 system-ui, sans-serif; margin: .25rem 0 .55rem; padding: .3rem .55rem; border-left: 3px solid var(--accent); background: var(--box); border-radius: 0 5px 5px 0; }
+.jg-called b { color: var(--accent); cursor: help; }
+.jg-called .jg-aka { font-size: 12px; }
+.jg-called a { text-decoration: none; }
 /* ── diagrams: everything is currentColor except skip/residual paths ── */
 figure.diagram { margin: 1.8rem 0; }
 figure.diagram svg { max-width: 100%; height: auto; display: block; margin: 0 auto; color: var(--fg); }
@@ -164,6 +174,61 @@ renderMathInElement(document.querySelector('main'), {
   throwOnError: true,
 });
 hljs.highlightAll();
+// The mini-project (our code, runs, results) is collapsed by default (user rule,
+// 2026-11-14): every section from the first whose <h2> mentions "mini-project"
+// up to the References goes into one closed <details>. Links into it open it.
+(function () {
+  const all = [...document.querySelectorAll('main > section[id]')];
+  const first = all.find(s => /mini-project/i.test((s.querySelector('h2') || {}).textContent || ''));
+  if (!first) return;
+  // the fold ends at the back matter: References, a reading list, or a hub's "Go deeper" list
+  const backMatter = s => s.id === 'refs' || /^(\\d+\\s*·\\s*)?(references|reading list|sources|go deeper)/i.test(((s.querySelector('h2') || {}).textContent || '').trim());
+  const refs = all.find(s => all.indexOf(s) > all.indexOf(first) && backMatter(s));
+  const fold = document.createElement('details');
+  fold.className = 'fold mp-fold'; fold.id = 'mini-project';
+  const n = all.slice(all.indexOf(first), refs ? all.indexOf(refs) : all.length).length;
+  fold.innerHTML = '<summary>The mini-project: our code, runs and measured results <span class="mp-hint">(' + n + ' section' + (n > 1 ? 's' : '') + ', click to show)</span></summary>';
+  first.parentNode.insertBefore(fold, first);
+  let node = first;
+  while (node && node !== refs) { const next = node.nextSibling; fold.appendChild(node); node = next; }
+  fold.addEventListener('toggle', () => window.dispatchEvent(new Event('resize')));
+})();
+// Any link or #hash pointing INSIDE a closed <details> (mini-project, notation,
+// jargon, deep-dive folds) opens every enclosing fold, then scrolls to it.
+(function () {
+  const reveal = (hash) => {
+    if (!hash || hash.length < 2) return false;
+    let el = null; try { el = document.getElementById(decodeURIComponent(hash.slice(1))); } catch (e) { return false; }
+    if (!el) return false;
+    let opened = false;
+    if (el.tagName === 'DETAILS' && !el.open) { el.open = true; opened = true; }
+    for (let d = el.parentElement && el.parentElement.closest('details'); d; d = d.parentElement && d.parentElement.closest('details'))
+      if (!d.open) { d.open = true; opened = true; }
+    if (!opened) return false;
+    requestAnimationFrame(() => el.scrollIntoView({ block: el.tagName === 'TR' ? 'center' : 'start' }));
+    if (el.tagName === 'TR') { el.style.outline = '2px solid var(--accent)'; setTimeout(() => el.style.outline = '', 1500); }
+    return true;
+  };
+  document.addEventListener('click', (ev) => {
+    const a = ev.target.closest && ev.target.closest('a[href^="#"]');
+    if (a && reveal(a.getAttribute('href'))) { ev.preventDefault(); history.replaceState(null, '', a.getAttribute('href')); }
+  });
+  window.addEventListener('hashchange', () => reveal(location.hash));
+  reveal(location.hash);
+})();
+// jargonLine(['term-id', ...]) -> a "called: name (also aliases) ↗" strip built from
+// the glossary rows <tr id="jg-<id>" data-name data-aka data-what>. Explorer and
+// stepper panels call it for whatever they are showing.
+window.jargonLine = window.jargonLine || function (ids) {
+  if (!ids || !ids.length) return '';
+  const esc = s => String(s || '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const parts = ids.map(id => {
+    const r = document.getElementById('jg-' + id); if (!r) return '';
+    const aka = r.dataset.aka && r.dataset.aka !== '—' ? ` <span class="jg-aka">(also ${esc(r.dataset.aka)})</span>` : '';
+    return `<b title="${esc(r.dataset.what)}">${esc(r.dataset.name)}</b>${aka} <a href="#jg-${id}" title="open in the glossary">↗</a>`;
+  }).filter(Boolean);
+  return parts.length ? `<div class="jg-called">called: ${parts.join(' · ')}</div>` : '';
+};
 // TOC auto-built from <section id> + its <h2>
 const toc = document.getElementById('toc');
 const sections = [...document.querySelectorAll('main section[id]')];
@@ -184,9 +249,10 @@ sections.forEach(s => obs.observe(s));
 document.addEventListener('keydown', (ev) => {
   if (ev.target.tagName === 'INPUT' || !'jk'.includes(ev.key)) return;
   const y = window.scrollY + 10;
-  const idx = sections.findLastIndex(s => s.offsetTop <= y);
-  const next = ev.key === 'j' ? Math.min(idx + 1, sections.length - 1) : Math.max(idx - 1, 0);
-  sections[next].scrollIntoView({ behavior: 'smooth' });
+  const shown = sections.filter(s => s.offsetParent !== null);   // skip sections inside a closed fold
+  const idx = shown.findLastIndex(s => s.offsetTop <= y);
+  const next = ev.key === 'j' ? Math.min(idx + 1, shown.length - 1) : Math.max(idx - 1, 0);
+  shown[next].scrollIntoView({ behavior: 'smooth' });
 });
 </script>
 </body>

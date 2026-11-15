@@ -23,6 +23,15 @@ or just say it naturally: *"I want to study this paper: \<link\>, distill it"*.
 
 or *"I want to study optimizers, distill the concept"*.
 
+**Test yourself** on any part of what you studied → `test-me`:
+
+```
+/test-me src/learning/<topic>/<family>      # or a concept page, several paths, `session`, `log`
+```
+
+It builds an HTML test (choices + written answers, saved to `answers.md` on
+Submit); say *"grade test <id>"* afterwards to be corrected question by question.
+
 ## Attribution
 
 `grilling` and `grill-me` are taken from Matt Pocock's skills collection:
@@ -35,7 +44,7 @@ Skills are made available to every project by symlinking into `~/.claude/skills/
 ```bash
 git clone <remote-url> ~/projects/claude-learning-skills
 for s in paper-distill concept-distill distill-core concept-code concept-code-tutor \
-         concept-explainer study-iterate grilling grill-me; do
+         concept-explainer study-iterate test-me grilling grill-me; do
   ln -s ~/projects/claude-learning-skills/$s ~/.claude/skills/$s
 done
 ```

@@ -38,6 +38,9 @@ concept-distill (seed: a topic) ─┘        │
                                           │
                                           ▼
                     study-iterate   (default mode ever after)
+                                          │
+                                          ▼
+                    test-me         (recap tests + grading, any time)
 ```
 
 ## Per-skill reference
@@ -99,6 +102,17 @@ get…") is answered in chat AND folded back into the pages/code where durable.
 Pages are edited via their `fragment.html` source and rebuilt — never by
 editing `index.html` directly.
 
+### test-me — recap tests and grading
+Builds a test page in `src/learning/recap/<YYYY-MM-DD>-<slug>/` over any scope
+(a concept page, a family, a topic, several paths, the session's questions, or
+the learner question log), shaped by `focus` (`only` / `related` / `mixed` /
+`none` relative to what the user asked) and `answers` (`mix` = 70% clickable
+choices + 30% written by default, `choice`, `text`). Each question has a Submit;
+every Submit overwrites `answers.md` in the test folder (File System Access API;
+download fallback). "grade test <id>" reads it and corrects wrong answers,
+completes partial ones, and updates the learner logs. The answer key stays in
+`test.json`, never in the page. Builder: `test-me/assets/build_test.py`.
+
 ### grilling / grill-me — interview engine
 A relentless one-question-at-a-time interview (AskUserQuestion, recommended
 option first) used by the distill grill rounds; `/grill-me` runs one
@@ -109,7 +123,7 @@ standalone. From Matt Pocock's collection (see README attribution).
 ```bash
 git clone <remote-url> ~/projects/claude-learning-skills
 for s in paper-distill concept-distill distill-core concept-code concept-code-tutor \
-         concept-explainer study-iterate grilling grill-me; do
+         concept-explainer study-iterate test-me grilling grill-me; do
   ln -s ~/projects/claude-learning-skills/$s ~/.claude/skills/$s
 done
 ```
@@ -142,6 +156,10 @@ The skills run inside whatever project the user studies in and create
 
 - Bookkeeping targets, updated when present: `docs/JOURNAL.md` (one entry per
   session) and a concept table in the host project's `CLAUDE.md`.
+- Learner memory (used by `test-me`, appended by `study-iterate`):
+  `docs/learner/questions.md` (every user question, by topic path → sub-topic,
+  with the difficulty it revealed and a status) and `docs/learner/tests.md`
+  (grading results). The host `CLAUDE.md` may name other paths.
 - Tooling: Python via `uv` (mini-projects, page builds), `node` (page
   validation), headless Chrome (visual verification), a CUDA GPU for `train`
   flavor mini-projects (analytical flavor needs none).
